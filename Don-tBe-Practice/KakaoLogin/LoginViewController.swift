@@ -12,19 +12,18 @@ import SnapKit
 
 final class LoginViewController: UIViewController {
     
-    private var cancellables: Set<AnyCancellable> = []
-
-    private let loginViewModel: LoginViewModelIO
-    
-    private let loginButton: UIButton = {
+    private var cancelBag = CancelBag()
+    private let viewModel: LoginViewModel
+    private let loginButtonTapped = PassthroughSubject<Void, Never>()
+    private lazy var backButtonTapped = self.loginButton.publisher(for: .touchUpInside).map { _ in }.eraseToAnyPublisher()
+    private lazy var loginButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "kakaoLoginButton"), for: .normal)
-        button.addTarget(self, action: #selector(didTappedLoginButton), for: .touchUpInside)
         return button
     }()
     
-    init(loginViewModel: LoginViewModelIO) {
-        self.loginViewModel = loginViewModel
+    init(viewModel: LoginViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -34,37 +33,21 @@ final class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindViewModel()
+        bind()
         setLayout()
     }
     
-    private func bindViewModel() {
-        // ViewModel의 loginPublisher를 구독하여 로그인 성공 및 실패 시 처리
-        loginViewModel.loginPublisher
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .finished:
-                    print("Login success")
-                case .failure(let error):
-                    print("Login error: \(error.localizedDescription)")
-                }
-            }, receiveValue: {})
-            .store(in: &cancellables)
+    private func bind() {
+        let input = LoginViewModel.Input(kakaoButtonTapped: backButtonTapped)
         
-        // ViewModel의 userInfoPublisher를 구독하여 회원 정보 처리
-        loginViewModel.userInfoPublisher
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    print("User info error: \(error.localizedDescription)")
-                }
-            }, receiveValue: { userInfo in
-                // 회원 정보 처리
-                print("Received user info: \(userInfo)")
-            })
-            .store(in: &cancellables)
+        let output = self.viewModel.transform(from: input, cancelBag: self.cancelBag)
+        
+        output.userInfoPublisher
+//            .receive(on: RunLoop.main)
+            .sink { userInfo in
+                print(userInfo)
+            }
+            .store(in: self.cancelBag)
     }
     
     private func setLayout() {
@@ -75,9 +58,5 @@ final class LoginViewController: UIViewController {
             $0.height.equalTo(65)
         }
     }
-    
-    @objc
-    private func didTappedLoginButton() {
-        loginViewModel.didTappedLoginButton()
-    }
 }
+

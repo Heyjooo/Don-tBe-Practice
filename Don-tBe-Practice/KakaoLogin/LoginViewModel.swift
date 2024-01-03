@@ -10,53 +10,50 @@ import Foundation
 
 import KakaoSDKUser
 
-protocol LoginViewModelInput {
-    func didTappedLoginButton()
-}
-
-protocol LoginViewModelOutput {
-    var loginPublisher: PassthroughSubject<Void, Error> { get set }
-    var userInfoPublisher: PassthroughSubject<UserInfo, Error> { get set }
-}
-
-protocol LoginViewModelIO: LoginViewModelInput & LoginViewModelOutput { }
-
-class LoginViewModel: NSObject, LoginViewModelIO {
-    var loginPublisher = PassthroughSubject<Void, Error>()
-    var userInfoPublisher = PassthroughSubject<UserInfo, Error>()
+final class LoginViewModel: ViewModelType {
+    private var cancelBag = CancelBag()
     
-    override init() {
-        super.init()
+    struct Input {
+        let kakaoButtonTapped: AnyPublisher<Void, Never>
     }
     
-    func didTappedLoginButton() {
-        // 카카오톡 실행 가능 여부 확인
-        if (UserApi.isKakaoTalkLoginAvailable()) {
-            UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
-                if let error = error {
-                    self.loginPublisher.send(completion: .failure(error))
-                } else {
-                    // 로그인 성공 시 UserInfo 객체를 생성하고, userInfoPublisher를 통해 ViewController로 전달
-                    if let accessToken = oauthToken?.accessToken {
-                        let userInfo = UserInfo(accessToken: accessToken)
-                        self.userInfoPublisher.send(userInfo)
+    struct Output {
+        var userInfoPublisher: PassthroughSubject<UserInfo, Never>
+    }
+    
+    func transform(from input: Input, cancelBag: CancelBag) -> Output {
+        let userInfoPublisher = PassthroughSubject<UserInfo, Never>()
+        
+        input.kakaoButtonTapped
+            .sink { _ in
+                if (UserApi.isKakaoTalkLoginAvailable()) {
+                    UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
+                        if let error {
+                            print(error)
+                        } else {
+                            // 로그인 성공 시 UserInfo 객체를 생성하고, userInfoPublisher를 통해 ViewController로 전달
+                            if let accessToken = oauthToken?.accessToken {
+                                let userInfo = UserInfo(accessToken: accessToken)
+                                userInfoPublisher.send(userInfo)
+                            }
+                        }
                     }
-                    self.loginPublisher.send(completion: .finished)
+                } else {
+                    UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
+                        if let error {
+                            print(error)
+                        } else {
+                            // 로그인 성공 시 UserInfo 객체를 생성하고, userInfoPublisher를 통해 ViewController로 전달
+                            if let accessToken = oauthToken?.accessToken {
+                                let userInfo = UserInfo(accessToken: accessToken)
+                                userInfoPublisher.send(userInfo)
+                            }
+                        }
+                    }
                 }
             }
-        } else {
-            UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
-                if let error = error {
-                    self.loginPublisher.send(completion: .failure(error))
-                } else {
-                    // 로그인 성공 시 UserInfo 객체를 생성하고, userInfoPublisher를 통해 ViewController로 전달
-                    if let accessToken = oauthToken?.accessToken {
-                        let userInfo = UserInfo(accessToken: accessToken)
-                        self.userInfoPublisher.send(userInfo)
-                    }
-                    self.loginPublisher.send(completion: .finished)
-                }
-            }
-        }
+            .store(in: self.cancelBag)
+        
+        return Output(userInfoPublisher: userInfoPublisher)
     }
 }

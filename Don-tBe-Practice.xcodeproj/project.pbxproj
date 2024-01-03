@@ -22,6 +22,8 @@
 		2A6D54AD2B45556C00F9891E /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2A6D54AC2B45556C00F9891E /* SnapKit */; };
 		2A6D54B02B455B9500F9891E /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D54AF2B455B9500F9891E /* UserInfo.swift */; };
 		2A6D54B52B458C9100F9891E /* CancelBag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D54B42B458C9100F9891E /* CancelBag.swift */; };
+		2A6D54B92B45BDA700F9891E /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D54B82B45BDA700F9891E /* ViewModelType.swift */; };
+		2A6D54BB2B45BE4700F9891E /* Publisher+UIControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D54BA2B45BE4700F9891E /* Publisher+UIControl.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		2A6D54A92B4548B800F9891E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		2A6D54AF2B455B9500F9891E /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		2A6D54B42B458C9100F9891E /* CancelBag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelBag.swift; sourceTree = "<group>"; };
+		2A6D54B82B45BDA700F9891E /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		2A6D54BA2B45BE4700F9891E /* Publisher+UIControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+UIControl.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,10 +100,12 @@
 		2A6D54962B453EDF00F9891E /* KakaoLogin */ = {
 			isa = PBXGroup;
 			children = (
+				2A6D54B82B45BDA700F9891E /* ViewModelType.swift */,
 				2A6D54972B45411100F9891E /* LoginViewModel.swift */,
 				2A6D54A92B4548B800F9891E /* LoginViewController.swift */,
 				2A6D54AF2B455B9500F9891E /* UserInfo.swift */,
 				2A6D54B42B458C9100F9891E /* CancelBag.swift */,
+				2A6D54BA2B45BE4700F9891E /* Publisher+UIControl.swift */,
 			);
 			path = KakaoLogin;
 			sourceTree = "<group>";
@@ -189,10 +195,12 @@
 				2A6D54812B45215D00F9891E /* CombineViewController.swift in Sources */,
 				2A6D54B52B458C9100F9891E /* CancelBag.swift in Sources */,
 				2A6D547D2B45215D00F9891E /* AppDelegate.swift in Sources */,
+				2A6D54BB2B45BE4700F9891E /* Publisher+UIControl.swift in Sources */,
 				2A6D54952B45260300F9891E /* ClubHouseHandsUp.swift in Sources */,
 				2A6D54982B45411100F9891E /* LoginViewModel.swift in Sources */,
 				2A6D54B02B455B9500F9891E /* UserInfo.swift in Sources */,
 				2A6D547F2B45215D00F9891E /* SceneDelegate.swift in Sources */,
+				2A6D54B92B45BDA700F9891E /* ViewModelType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

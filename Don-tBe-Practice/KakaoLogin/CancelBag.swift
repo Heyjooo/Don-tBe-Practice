@@ -8,15 +8,19 @@
 import Combine
 import Foundation
 
-struct CancelBag {
-    private var cancellables: Set<AnyCancellable> = []
-
-    mutating func collect(_ cancellable: AnyCancellable) {
-        cancellables.insert(cancellable)
+class CancelBag {
+    var subscriptions = Set<AnyCancellable>()
+    
+    func cancel() {
+        subscriptions.forEach { $0.cancel() }
+        subscriptions.removeAll()
     }
+    
+    init() {}
+}
 
-    mutating func cancelAll() {
-        cancellables.forEach { $0.cancel() }
-        cancellables.removeAll()
+extension AnyCancellable {
+    func store(in cancelBag: CancelBag) {
+        cancelBag.subscriptions.insert(self)
     }
 }
