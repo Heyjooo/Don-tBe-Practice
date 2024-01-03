@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-final class ViewController: UIViewController {
+final class CombineViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
