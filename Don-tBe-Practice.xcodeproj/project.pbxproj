@@ -11,6 +11,7 @@
 		2A6D547F2B45215D00F9891E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D547E2B45215D00F9891E /* SceneDelegate.swift */; };
 		2A6D54812B45215D00F9891E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D54802B45215D00F9891E /* ViewController.swift */; };
 		2A6D54862B45215F00F9891E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A6D54852B45215F00F9891E /* Assets.xcassets */; };
+		2A6D54952B45260300F9891E /* ClubHouseHandsUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D54942B45260300F9891E /* ClubHouseHandsUp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,7 @@
 		2A6D54802B45215D00F9891E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		2A6D54852B45215F00F9891E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2A6D548A2B45215F00F9891E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2A6D54942B45260300F9891E /* ClubHouseHandsUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubHouseHandsUp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +54,7 @@
 		2A6D547B2B45215D00F9891E /* Don-tBe-Practice */ = {
 			isa = PBXGroup;
 			children = (
+				2A6D54932B4525F800F9891E /* Combine */,
 				2A6D547C2B45215D00F9891E /* AppDelegate.swift */,
 				2A6D547E2B45215D00F9891E /* SceneDelegate.swift */,
 				2A6D54802B45215D00F9891E /* ViewController.swift */,
@@ -59,6 +62,14 @@
 				2A6D548A2B45215F00F9891E /* Info.plist */,
 			);
 			path = "Don-tBe-Practice";
+			sourceTree = "<group>";
+		};
+		2A6D54932B4525F800F9891E /* Combine */ = {
+			isa = PBXGroup;
+			children = (
+				2A6D54942B45260300F9891E /* ClubHouseHandsUp.swift */,
+			);
+			path = Combine;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -132,6 +143,7 @@
 			files = (
 				2A6D54812B45215D00F9891E /* ViewController.swift in Sources */,
 				2A6D547D2B45215D00F9891E /* AppDelegate.swift in Sources */,
+				2A6D54952B45260300F9891E /* ClubHouseHandsUp.swift in Sources */,
 				2A6D547F2B45215D00F9891E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
