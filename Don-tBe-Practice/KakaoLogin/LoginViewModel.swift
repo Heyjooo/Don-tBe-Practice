@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+
 import KakaoSDKUser
 
 protocol LoginViewModelInput {
@@ -44,7 +45,7 @@ class LoginViewModel: NSObject, LoginViewModelIO {
                 }
             }
         } else {
-            UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
+            UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
                 if let error = error {
                     self.loginPublisher.send(completion: .failure(error))
                 } else {

@@ -5,16 +5,16 @@
 //  Created by 변희주 on 1/3/24.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
-import Combine
 
 final class LoginViewController: UIViewController {
     
     private var cancellables: Set<AnyCancellable> = []
 
-    private let loginViewModel: LoginViewModel
+    private let loginViewModel: LoginViewModelIO
     
     private let loginButton: UIButton = {
         let button = UIButton()
@@ -23,7 +23,7 @@ final class LoginViewController: UIViewController {
         return button
     }()
     
-    init(loginViewModel: LoginViewModel) {
+    init(loginViewModel: LoginViewModelIO) {
         self.loginViewModel = loginViewModel
         super.init(nibName: nil, bundle: nil)
     }
