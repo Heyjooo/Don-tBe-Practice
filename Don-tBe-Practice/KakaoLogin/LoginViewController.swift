@@ -14,8 +14,7 @@ final class LoginViewController: UIViewController {
     
     private var cancelBag = CancelBag()
     private let viewModel: LoginViewModel
-    private let loginButtonTapped = PassthroughSubject<Void, Never>()
-    private lazy var backButtonTapped = self.loginButton.publisher(for: .touchUpInside).map { _ in }.eraseToAnyPublisher()
+    private lazy var loginButtonTapped = self.loginButton.publisher(for: .touchUpInside).map { _ in }.eraseToAnyPublisher()
     private lazy var loginButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "kakaoLoginButton"), for: .normal)
@@ -33,12 +32,12 @@ final class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bind()
+        bindViewModel()
         setLayout()
     }
     
-    private func bind() {
-        let input = LoginViewModel.Input(kakaoButtonTapped: backButtonTapped)
+    private func bindViewModel() {
+        let input = LoginViewModel.Input(kakaoButtonTapped: loginButtonTapped)
         
         let output = self.viewModel.transform(from: input, cancelBag: self.cancelBag)
         

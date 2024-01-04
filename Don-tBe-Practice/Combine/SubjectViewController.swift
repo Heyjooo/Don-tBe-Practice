@@ -72,7 +72,8 @@ final class SubjectViewController: UIViewController {
         subject
             .sink(receiveValue: { print($0) })
             .store(in: &subscriptions) // 3. subcription을 subscriptions 묶음에 저장
-        
+            // in 안에 들어가는 parameter 타입은 Set<AnyCancellable> 으로 이곳에 여러 subscription을 저장할 수 있음. 저장된 subscription들은 해당 set이 초기화 해체(deinitialized)될 때 같이 자동으로 취소됨      => 관리 쉬움
+
         subject.send(1)
         subject.send(2)
         
