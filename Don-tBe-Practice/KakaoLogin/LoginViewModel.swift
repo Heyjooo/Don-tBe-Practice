@@ -11,14 +11,14 @@ import Foundation
 import KakaoSDKUser
 
 final class LoginViewModel: ViewModelType {
-    private var cancelBag = CancelBag()
+    private let cancelBag = CancelBag()
     
     struct Input {
         let kakaoButtonTapped: AnyPublisher<Void, Never>
     }
     
     struct Output {
-        var userInfoPublisher: PassthroughSubject<UserInfo, Never>
+        let userInfoPublisher: PassthroughSubject<UserInfo, Never>
     }
     
     func transform(from input: Input, cancelBag: CancelBag) -> Output {
