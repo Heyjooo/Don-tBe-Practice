@@ -24,7 +24,7 @@
 		2A6D54B52B458C9100F9891E /* CancelBag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D54B42B458C9100F9891E /* CancelBag.swift */; };
 		2A6D54B92B45BDA700F9891E /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D54B82B45BDA700F9891E /* ViewModelType.swift */; };
 		2A6D54BB2B45BE4700F9891E /* Publisher+UIControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D54BA2B45BE4700F9891E /* Publisher+UIControl.swift */; };
-		2A6D54BD2B46C15600F9891E /* PassThroughSubjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D54BC2B46C15600F9891E /* PassThroughSubjectViewController.swift */; };
+		2A6D54BD2B46C15600F9891E /* SubjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D54BC2B46C15600F9891E /* SubjectViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,7 +41,7 @@
 		2A6D54B42B458C9100F9891E /* CancelBag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelBag.swift; sourceTree = "<group>"; };
 		2A6D54B82B45BDA700F9891E /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		2A6D54BA2B45BE4700F9891E /* Publisher+UIControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+UIControl.swift"; sourceTree = "<group>"; };
-		2A6D54BC2B46C15600F9891E /* PassThroughSubjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassThroughSubjectViewController.swift; sourceTree = "<group>"; };
+		2A6D54BC2B46C15600F9891E /* SubjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,7 +95,7 @@
 			children = (
 				2A6D54802B45215D00F9891E /* CombineViewController.swift */,
 				2A6D54942B45260300F9891E /* ClubHouseHandsUp.swift */,
-				2A6D54BC2B46C15600F9891E /* PassThroughSubjectViewController.swift */,
+				2A6D54BC2B46C15600F9891E /* SubjectViewController.swift */,
 			);
 			path = Combine;
 			sourceTree = "<group>";
@@ -203,7 +203,7 @@
 				2A6D54982B45411100F9891E /* LoginViewModel.swift in Sources */,
 				2A6D54B02B455B9500F9891E /* UserInfo.swift in Sources */,
 				2A6D547F2B45215D00F9891E /* SceneDelegate.swift in Sources */,
-				2A6D54BD2B46C15600F9891E /* PassThroughSubjectViewController.swift in Sources */,
+				2A6D54BD2B46C15600F9891E /* SubjectViewController.swift in Sources */,
 				2A6D54B92B45BDA700F9891E /* ViewModelType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
