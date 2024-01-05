@@ -20,6 +20,7 @@ final class LoginViewController: UIViewController {
         button.setImage(UIImage(named: "kakaoLoginButton"), for: .normal)
         return button
     }()
+    private var myToken: String = ""
     
     init(viewModel: LoginViewModel) {
         self.viewModel = viewModel
@@ -44,7 +45,10 @@ final class LoginViewController: UIViewController {
         output.userInfoPublisher
 //            .receive(on: RunLoop.main)
             .sink { userInfo in
+                self.myToken = userInfo.accessToken
+                UserDefaults.standard.set(self.myToken, forKey: "userID")
                 print(userInfo)
+
             }
             .store(in: self.cancelBag)
     }
