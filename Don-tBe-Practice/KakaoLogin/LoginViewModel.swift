@@ -14,7 +14,6 @@ import KakaoSDKUser
 
 final class LoginViewModel: ViewModelType {
     private let cancelBag = CancelBag()
-    private let userInfoPublisher = PassthroughSubject<UserInfo, Never>()
     
     struct Input {
         let kakaoButtonTapped: AnyPublisher<Void, Never>
@@ -25,46 +24,38 @@ final class LoginViewModel: ViewModelType {
     }
     
     func transform(from input: Input, cancelBag: CancelBag) -> Output {
+        let userInfoPublisher = PassthroughSubject<UserInfo, Never>()
         
         input.kakaoButtonTapped
             .sink { _ in
-                if (UserApi.isKakaoTalkLoginAvailable()) {
-                    UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
-                        self.setUserInfo(oauthToken: OAuthToken.init(accessToken: "", tokenType: "", refreshToken: "", scope: "", scopes: []))
+                    if (UserApi.isKakaoTalkLoginAvailable()) {
+                        UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
+                            if UserDefaults.standard.string(forKey: "userID") ?? "" == "" {
+                                if let accessToken = oauthToken?.accessToken {
+                                    let userInfo = UserInfo(accessToken: accessToken)
+                                    userInfoPublisher.send(userInfo)
+                                }
+                            } else {
+                                userInfoPublisher.send(UserInfo(accessToken: UserDefaults.standard.string(forKey: "userID") ?? ""))
+                            }
+                            
+                        }
+                    } else {
+                        UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
+                            if UserDefaults.standard.string(forKey: "userID") ?? "" == "" {
+                                if let accessToken = oauthToken?.accessToken {
+                                    let userInfo = UserInfo(accessToken: accessToken)
+                                    userInfoPublisher.send(userInfo)
+                                }
+                            } else {
+                                userInfoPublisher.send(UserInfo(accessToken: UserDefaults.standard.string(forKey: "userID") ?? ""))
+                            }
+                            
+                        }
                     }
-                } else {
-                    UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
-                        self.setUserInfo(oauthToken: OAuthToken.init(accessToken: "", tokenType: "", refreshToken: "", scope: "", scopes: []))
-
-                    }
-                }
             }
             .store(in: self.cancelBag)
         
         return Output(userInfoPublisher: userInfoPublisher)
-    }
-    
-    func setUserInfo(oauthToken: OAuthToken) {
-        let accessToken = oauthToken.accessToken
-        if (AuthApi.hasToken()) {
-            UserApi.shared.accessTokenInfo { (_, error) in
-                if let error = error {
-                    if let sdkError = error as? SdkError, sdkError.isInvalidTokenError() == true  {
-                        //로그인 필요
-                        let userInfo = UserInfo(accessToken: accessToken)
-                        self.userInfoPublisher.send(userInfo)
-                    
-                    } else {
-                        //기타 에러
-                    }
-                } else {
-                    self.userInfoPublisher.send(UserInfo(accessToken: UserDefaults.standard.string(forKey: "userID") ?? ""))
-                }
-            }
-        } else {
-            //로그인 필요
-            let userInfo = UserInfo(accessToken: accessToken)
-            self.userInfoPublisher.send(userInfo)
-        }
     }
 }
