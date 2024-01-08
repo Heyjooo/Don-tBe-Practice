@@ -28,31 +28,29 @@ final class LoginViewModel: ViewModelType {
         
         input.kakaoButtonTapped
             .sink { _ in
-                    if (UserApi.isKakaoTalkLoginAvailable()) {
-                        UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
-                            if UserDefaults.standard.string(forKey: "userID") ?? "" == "" {
-                                if let accessToken = oauthToken?.accessToken {
-                                    let userInfo = UserInfo(accessToken: accessToken)
-                                    userInfoPublisher.send(userInfo)
-                                }
-                            } else {
-                                userInfoPublisher.send(UserInfo(accessToken: UserDefaults.standard.string(forKey: "userID") ?? ""))
+                if (UserApi.isKakaoTalkLoginAvailable()) {
+                    UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
+                        if let error {
+                            print(error)
+                        } else {
+                            if let accessToken = oauthToken?.accessToken {
+                                let userInfo = UserInfo(accessToken: accessToken)
+                                userInfoPublisher.send(userInfo)
                             }
-                            
-                        }
-                    } else {
-                        UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
-                            if UserDefaults.standard.string(forKey: "userID") ?? "" == "" {
-                                if let accessToken = oauthToken?.accessToken {
-                                    let userInfo = UserInfo(accessToken: accessToken)
-                                    userInfoPublisher.send(userInfo)
-                                }
-                            } else {
-                                userInfoPublisher.send(UserInfo(accessToken: UserDefaults.standard.string(forKey: "userID") ?? ""))
-                            }
-                            
                         }
                     }
+                } else {
+                    UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
+                        if let error {
+                            print(error)
+                        } else {
+                            if let accessToken = oauthToken?.accessToken {
+                                let userInfo = UserInfo(accessToken: accessToken)
+                                userInfoPublisher.send(userInfo)
+                            }
+                        }
+                    }
+                }
             }
             .store(in: self.cancelBag)
         

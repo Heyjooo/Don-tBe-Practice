@@ -45,8 +45,6 @@ final class LoginViewController: UIViewController {
         output.userInfoPublisher
 //            .receive(on: RunLoop.main)
             .sink { userInfo in
-                self.myToken = userInfo.accessToken
-                UserDefaults.standard.set(self.myToken, forKey: "userID")
                 print(userInfo)
 
             }
